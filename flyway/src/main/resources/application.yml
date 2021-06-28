@@ -1,0 +1,47 @@
+server:
+  port: 28085
+
+# mysql 配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://121.40.78.211:3306/flyway?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+      username: root
+      password: mysql
+      filters: stat,wall,slf4j,config
+      initial-size: 10
+      max-active: 30
+      min-idle: 1
+      max-wait: 30000
+      time-between-eviction-runs-millis: 60000
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 1 FROM DUAL
+  flyway:
+    # 是否启用flyway
+    enabled: true
+    #    url: jdbc:mysql://121.40.78.211:3306/flyway_db?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    #    user: root
+    #    password: mysql
+    # 编码格式，默认UTF-8
+    encoding: UTF-8
+    # 迁移sql脚本文件存放路径，默认db/migration
+    locations: classpath:db/migration
+    # 迁移sql脚本文件名称的前缀，默认V
+    sql-migration-prefix: V
+    # 迁移sql脚本文件名称的分隔符，默认2个下划线__
+    sql-migration-separator: __
+    # 迁移sql脚本文件名称的后缀
+    sql-migration-suffixes: .sql
+    # 迁移时是否进行校验，默认true
+    validate-on-migrate: true
+    # 当迁移发现数据库非空且存在没有元数据的表时，自动执行基准迁移，新建schema_version表
+    baseline-on-migrate: true
+
+# mybatis-plus配置
+mybatis-plus:
+  mapper-locations: com/example/domain/repository/mapper/*.xml
+  type-aliases-package: com.example.domain.entity.*
